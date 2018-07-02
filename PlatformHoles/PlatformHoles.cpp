@@ -24,12 +24,8 @@ private:
 	std::vector<Platform> platforms;
 public:
 	World() = delete;//??
+	//World(World& second) = delete;
 	World(int skyLeft, int skyRight, int numPlatforms, std::vector<Platform> platforms);
-	//~World();
-	int getSkyLeft();
-	int getSkyRight();
-	int getNumPlatforms();
-	Platform getPlatform(int index);
 
 	std::string getHoles();
 };
@@ -39,13 +35,12 @@ private:
 	int left, right;
 	int yPos;
 public:
-	Platform() = delete;//??
+	Platform() = delete;
+	//Platform(Platform& second) = delete;
 	Platform(int left, int right, int yPos);
-	//~Platform();
 
 	int getLeft();
 	int getRight();
-	int getYPos();
 
 	bool operator<(Platform &second);
 };
@@ -125,11 +120,6 @@ int Platform::getRight()
 	return right;
 }
 
-int Platform::getYPos()
-{
-	return yPos;
-}
-
 bool Platform::operator<(Platform& second)
 {
 	return this->left < second.left;
@@ -139,13 +129,31 @@ bool Platform::operator<(Platform& second)
 //Additional
 
 World handleInput();
-World handleInput(std::string input);//for testing
 
+
+
+//implementation
+World handleInput()
+{
+	int skyLeft, skyRight, numPlatforms;
+	std::vector <Platform> platforms;
+
+	std::cin >> skyLeft >> skyRight >> numPlatforms;
+
+	int left, right, y;
+	for (int i = 0; i < numPlatforms; i++)
+	{
+		std::cin >> left >> right >> y;
+		platforms.push_back({ left,right,y });
+	}
+
+	return World(skyLeft, skyRight, numPlatforms, platforms);
+}
 ///Addidional
 
 int main()
 {
-	//todo read to vector
+	/*
 	int skyLeft = 0,
 		skyRight = 25;
 	int numPlatforms = 7;
@@ -159,8 +167,9 @@ int main()
 		{21, 22, 0},
 		{17, 19, -4},
 	};
+	*/
 
-	World world = World(skyLeft, skyRight, numPlatforms, platforms);
+	World world = handleInput();
 	
 	std::cout<<world.getHoles()<<std::endl;
 
