@@ -76,7 +76,7 @@ std::string World::getHoles()
 		while(right < pos)	//______P
 							// ___R
 		{
-			//skip next(this?) platform
+			//skip this platform
 			i++;
 			right = platforms[i].getRight();
 		}
@@ -127,10 +127,7 @@ bool Platform::operator<(Platform& second)
 ///Platform
 
 //Additional
-
 World handleInput();
-
-
 
 //implementation
 World handleInput()
@@ -141,7 +138,7 @@ World handleInput()
 	std::cin >> skyLeft >> skyRight >> numPlatforms;
 
 	int left, right, y;
-	for (int i = 0; i < numPlatforms; i++)
+	for (int i = 0; i < numPlatforms - 1; i++)
 	{
 		std::cin >> left >> right >> y;
 		platforms.push_back({ left,right,y });
