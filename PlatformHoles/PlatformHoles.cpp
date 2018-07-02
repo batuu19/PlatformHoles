@@ -61,6 +61,49 @@ World::World(int skyLeft, int skyRight, int numPlatforms, std::vector<Platform> 
 	std::sort(this->platforms.begin(), this->platforms.end());
 }
 
+std::string World::getHoles()
+{
+	int holes = 0;
+	int space = 0;
+
+	int pos = skyLeft;
+
+	for (int i = 0; i < numPlatforms; i++)
+	{
+		int left = platforms[i].getLeft();
+		int right = platforms[i].getRight();
+		if (left > pos)//there is hole __P  L___
+		{
+			holes++;
+			space += left - pos;
+		}
+
+		while(right < pos)	//______P
+							// ___R
+		{
+			//skip next(this?) platform
+			i++;
+			right = platforms[i].getRight();
+		}
+
+		pos = platforms[i].getRight();
+	}
+	//hole at end
+	int right = platforms[numPlatforms - 1].getRight();
+	if (right < skyRight)
+	{
+		holes++;
+		space += skyRight - right;
+	}
+
+
+	std::stringstream ss;
+
+	ss << holes << " " << space;
+
+	return ss.str();
+}
+
 ///World
 
 //Platform implementation
@@ -104,15 +147,12 @@ int main()
 {
 	//todo read to vector
 	int skyLeft = 0,
-		skyRight = 8;
+		skyRight = 25;
 	int numPlatforms = 7;
 	std::vector<Platform >platforms =
 	{
 		{0,7,0},
 		{6,10,-2},
-		{ 1,7,2 },
-		{0, 7, 0},
-		{6, 10 ,-2},
 		{9, 12, 0},
 		{13, 16, 0},
 		{15, 18, -2},
@@ -122,10 +162,7 @@ int main()
 
 	World world = World(skyLeft, skyRight, numPlatforms, platforms);
 	
-	WorldMap map = world.getAsMap();
-
-	map.show();
-	std::cout<<map.getHoles()<<std::endl;
+	std::cout<<world.getHoles()<<std::endl;
 
 	system("pause");
     return 0;
