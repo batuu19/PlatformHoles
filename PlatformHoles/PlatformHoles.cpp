@@ -12,7 +12,6 @@
 #include <iostream>
 #include <sstream>
 
-class Engine;
 class World;
 class Platform;
 
@@ -23,8 +22,7 @@ private:
 	int numPlatforms;
 	std::vector<Platform> platforms;
 public:
-	World() = delete;//??
-	//World(World& second) = delete;
+	World() = delete;
 	World(int skyLeft, int skyRight, int numPlatforms, std::vector<Platform> platforms);
 
 	std::string getHoles();
@@ -36,7 +34,6 @@ private:
 	int yPos;
 public:
 	Platform() = delete;
-	//Platform(Platform& second) = delete;
 	Platform(int left, int right, int yPos);
 
 	int getLeft();
@@ -138,7 +135,7 @@ World handleInput()
 	std::cin >> skyLeft >> skyRight >> numPlatforms;
 
 	int left, right, y;
-	for (int i = 0; i < numPlatforms - 1; i++)
+	for (int i = 0; i < numPlatforms; i++)
 	{
 		std::cin >> left >> right >> y;
 		platforms.push_back({ left,right,y });
@@ -150,27 +147,10 @@ World handleInput()
 
 int main()
 {
-	/*
-	int skyLeft = 0,
-		skyRight = 25;
-	int numPlatforms = 7;
-	std::vector<Platform >platforms =
-	{
-		{0,7,0},
-		{6,10,-2},
-		{9, 12, 0},
-		{13, 16, 0},
-		{15, 18, -2},
-		{21, 22, 0},
-		{17, 19, -4},
-	};
-	*/
-
 	World world = handleInput();
 	
 	std::cout<<world.getHoles()<<std::endl;
 
-	system("pause");
     return 0;
 }
 
